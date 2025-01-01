@@ -1,3 +1,5 @@
+// "use client";
+
 import React from "react";
 import {
   Table,
@@ -9,9 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getAllBooks } from "@/app/actions/books.actions";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const page = async () => {
-  const books = await getAllBooks();
+  const books = await getAllBooks(1, 5);
 
   return (
     <div>
@@ -35,6 +38,7 @@ const page = async () => {
           ))}
         </TableBody>
       </Table>
+      <PaginationComponent />
     </div>
   );
 };
