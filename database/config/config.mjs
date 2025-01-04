@@ -1,34 +1,10 @@
-// {
-//   "development": {
-//     "username": "root",
-//     "password": null,
-//     "database": "database_development",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   },
-//   "test": {
-//     "username": "root",
-//     "password": null,
-//     "database": "database_test",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   },
-//   "production": {
-//     "username": "root",
-//     "password": null,
-//     "database": "database_production",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   }
-// }
-
 export const options = {
-  username: process.env.DATABASE_USERNAME,
+  username: process.env.DATABASE_USERNAME || "root",
   password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  database: process.env.DATABASE_NAME || "nextjs-shadcnui-dashboard-db",
   host: process.env.DATABASE_HOST,
   port: Number(process.env.DATABASE_PORT),
-  dialect: process.env.DATABASE_DIALECT,
+  dialect: "mysql",
   logging: process.env.NODE_ENV === "development" ? true : false,
   migrationStorageTableName: "migrations",
 };

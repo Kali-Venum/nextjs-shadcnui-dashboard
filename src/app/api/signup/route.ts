@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import User from "@/models/User";
 
 export async function POST(req: NextRequest) {
   try {
     // Read the data from the request body
     const body = await req.json();
-    
+
     // Ensure the body is an object and not null
     if (!body || typeof body !== "object") {
       throw new TypeError(
@@ -20,7 +21,12 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // Create a user in db
-    
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
     console.log(newUser, "newUser");
 
     return NextResponse.json({
