@@ -1,5 +1,7 @@
 {
   "USER": {
-    "USER_CREATED": "User created successfully."
+    "USER_CREATED": "User created successfully.",
+    "INVALID_CREDENTIALS": "Invalid credentials.",
+    "LOGIN_SUCCESS": "User loggedin successfully."
   }
 }

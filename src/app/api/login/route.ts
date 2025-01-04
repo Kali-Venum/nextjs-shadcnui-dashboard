@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import messages from "@/messages.json";
+import createAuthToken from "@/helpers/createAuthToken";
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,23 +17,45 @@ export async function POST(req: NextRequest) {
     }
 
     // Extracting data from the body
-    const { name, email, password } = body;
+    const { email, password } = body;
 
-    // Hashing the password
-    const hashedPassword = await bcrypt.hash(password, 8);
-
-    // Create a user in db
-    const newUser = await User.create({
-      name,
-      email,
-      password: hashedPassword,
+    // Check the email exists or not.
+    const existingUser: any = await User.findOne({
+      where: {
+        email,
+      },
     });
 
+    if (!existingUser) {
+      return Response.json(
+        {
+          error: messages.USER.INVALID_CREDENTIALS,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Compare password.
+    const checkPassword = await bcrypt.compare(password, existingUser.password);
+
+    if (!checkPassword) {
+      return Response.json(
+        {
+          error: messages.USER.INVALID_CREDENTIALS,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Create a jwt token.
+    const jwtToken = await createAuthToken(existingUser);
+
     return NextResponse.json({
-      message: messages.USER.USER_CREATED,
-      statusCode: 201,
+      message: messages.USER.LOGIN_SUCCESS,
+      statusCode: 200,
       data: {
-        user: newUser,
+        user: existingUser,
+        authToken: jwtToken,
       },
     });
   } catch (error: any) {
