@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
       name,
       email,
       password: hashedPassword,
+      roleId: 2,
     });
 
     return NextResponse.json({

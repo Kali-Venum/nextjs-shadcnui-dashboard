@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import messages from "@/messages.json";
 import createAuthToken from "@/helpers/createAuthToken";
+import Role from "@/models/Role";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,6 +25,11 @@ export async function POST(req: NextRequest) {
       where: {
         email,
       },
+      include: [
+        {
+          model: Role,
+        },
+      ],
     });
 
     if (!existingUser) {
