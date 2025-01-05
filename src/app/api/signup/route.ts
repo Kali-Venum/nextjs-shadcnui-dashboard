@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import User from "@/models/User";
 import messages from "@/messages.json";
+const db = require("../../../database/models");
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,15 +16,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Extracting data from the body
-    const { name, email, password } = body;
+    const { firstName, middleName, lastName, email, mobileNumber, password } =
+      body;
 
     // Hashing the password
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // Create a user in db
-    const newUser = await User.create({
-      name,
+    const newUser = await db.Users.create({
+      firstName,
+      middleName,
+      lastName,
       email,
+      mobileNumber,
       password: hashedPassword,
       roleId: 2,
     });
