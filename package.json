@@ -14,6 +14,7 @@
     "migrate:rollback:all": "npx sequelize-cli db:migrate:undo:all"
   },
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-collapsible": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -43,6 +44,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
+    "prisma": "^6.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
